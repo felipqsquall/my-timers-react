@@ -1,10 +1,11 @@
 import { useState } from "react";
 
 import TimerForm from "./components/TimerForm";
+import Timer from "./components/Timer";
 import styles from "./App.module.css";
 
 function App() {
-  const [timers, setTimer] = useState([
+  const [timers, setTimers] = useState([
     {id: 1, name: "Primeiro", duration: 3},
     {id: 2, name: "Segundo", duration: 60}
   ]);
@@ -13,12 +14,11 @@ function App() {
     <main className={styles.main}>
       <h1 className={styles.title}>Timers</h1>
 
-      <TimerForm setTimer={setTimer}/>
+      <TimerForm setTimers = {setTimers}/>
 
       <div className={styles.timers}>
         {timers.map((timer) => (
-          <h3 key={timer.id}>{timer.name}</h3>
-          <Timer />
+          <Timer key={timer.id} {...timer}/>
         ))}
       </div>
     </main>
