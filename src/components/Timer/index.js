@@ -1,17 +1,22 @@
 import {useState, useEffect} from "react";
+import Loading from "../Loading";
 import styles from "./Timer.module.css";
 
 const Timer = ({name, duration}) => {
   const [timeLeft, setTimeLeft] = useState(duration);
   const [intervalId, setIntervalId] = useState(null);
+  const [running, setRunning] = useState(false);
 
   useEffect(() => {
     if (timeLeft === 0 ){
       clearInterval(intervalId);
+      setRunning(false);
     }
   },[timeLeft, intervalId]);
 
   const handleStartClick = () => {
+    setRunning(true);
+
     const id = setInterval(() => {
       setTimeLeft((seconds) => seconds - 1);
     }, 1000);
@@ -32,7 +37,14 @@ const Timer = ({name, duration}) => {
           <span>{timeLeft !== 0 ? timeLeft : "Finalizado!"}</span>
         </div>
 
-        <button className={`${styles.button} ${styles.start}`} onClick={handleStartClick}>Iniciar</button>
+        {running ? (
+          <Loading />
+        ) : (
+            timeLeft > 0 && (
+            <button className={`${styles.button} ${styles.start}`} 
+                    onClick={handleStartClick}>Iniciar</button>
+            )
+          )}
       </div>
     </section>
   )
