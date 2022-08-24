@@ -1,8 +1,23 @@
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import styles from "./Timer.module.css";
 
 const Timer = ({name, duration}) => {
   const [timeLeft, setTimeLeft] = useState(duration);
+  const [intervalId, setIntervalId] = useState(null);
+
+  useEffect(() => {
+    if (timeLeft === 0 ){
+      clearInterval(intervalId);
+    }
+  },[timeLeft, intervalId]);
+
+  const handleStartClick = () => {
+    const id = setInterval(() => {
+      setTimeLeft((seconds) => seconds - 1);
+    }, 1000);
+
+    setIntervalId(id);
+  };
 
   return (
     <section className={styles.timer}>
@@ -14,8 +29,10 @@ const Timer = ({name, duration}) => {
 
       <div className={styles.details}>
         <div className={styles.timeLeft}>
-          <span>{timeLeft}</span>
+          <span>{timeLeft !== 0 ? timeLeft : "Finalizado!"}</span>
         </div>
+
+        <button className={`${styles.button} ${styles.start}`} onClick={handleStartClick}>Iniciar</button>
       </div>
     </section>
   )
