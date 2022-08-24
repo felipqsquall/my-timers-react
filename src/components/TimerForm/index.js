@@ -22,7 +22,6 @@ const TimerForm = ({setTimers}) => {
         className={styles.input} 
         name="name" 
         placeholder="Nome"
-        defaultValue="Teste" //TODO: REMOVER
       />
 
       <input 
@@ -31,7 +30,6 @@ const TimerForm = ({setTimers}) => {
         name="duration" 
         placeholder="Duração (segundos)"
         min="1"
-        defaultValue={5} //TODO: REMOVER
       />
 
       <input
