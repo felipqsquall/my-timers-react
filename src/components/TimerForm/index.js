@@ -1,13 +1,17 @@
 import styles from  "./TimerForm.module.css";
 
-const TimerForm = () => {
+const TimerForm = ({setTimer}) => {
   const handleFormSubmit = (event) =>{
     event.preventDefault();
 
     const form = event.target;
     const newTimer = Object.fromEntries(new FormData(form));
+    newTimer.id =  Date.now();
+    newTimer.duration = parseInt(newTimer.duration);
 
-    console.log(newTimer);
+    setTimer((timers) => [...timers, newTimer]);
+
+    form.reset();
   }
 
 
@@ -18,7 +22,7 @@ const TimerForm = () => {
         className={styles.input} 
         name="name" 
         placeholder="Nome"
-        defaultValue="Teste"
+        defaultValue="Teste" //TODO: REMOVER
       />
 
       <input 
@@ -27,7 +31,7 @@ const TimerForm = () => {
         name="duration" 
         placeholder="Duração (segundos)"
         min="1"
-        defaultValue={5}
+        defaultValue={5} //TODO: REMOVER
       />
 
       <input
