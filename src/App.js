@@ -18,6 +18,7 @@ function App() {
       <div className={styles.timers}>
         {timers.map((timer) => (
           <h3 key={timer.id}>{timer.name}</h3>
+          <Timer />
         ))}
       </div>
     </main>
