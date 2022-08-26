@@ -1,31 +1,31 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, useRef} from "react";
 import Loading from "../Loading";
 import styles from "./Timer.module.css";
 
 const Timer = ({id, name, duration, deleteTimer}) => {
   const [timeLeft, setTimeLeft] = useState(duration);
-  const [intervalId, setIntervalId] = useState(null);
+  //const [intervalId, setIntervalId] = useState(null);
   const [running, setRunning] = useState(false);
+
+  const intervalId = useRef(null);
 
   useEffect(() => {
     if (timeLeft === 0 ){
-      clearInterval(intervalId);
+      clearInterval(intervalId.current);
       setRunning(false);
     }
   },[timeLeft, intervalId]);
 
   useEffect(() => {
-    return () => {clearInterval(intervalId);};
-  }, [intervalId]);
+    return () => {clearInterval(intervalId.current);};
+  }, []);
 
   const handleStartClick = () => {
     setRunning(true);
 
-    const id = setInterval(() => {
+    intervalId.current = setInterval(() => {
       setTimeLeft((seconds) => seconds - 1);
     }, 1000);
-
-    setIntervalId(id);
   };
 
   const handleDeleteClick = () => {
